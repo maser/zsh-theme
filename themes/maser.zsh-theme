@@ -43,10 +43,17 @@ function git_remote_information {
     echo $remote_information
 }
 
+function aws_vault_information {
+    if [ "$AWS_VAULT" ] ; then
+        echo "AWS:$AWS_VAULT"
+    fi
+}
+
 local pwd='%{$fg[white]%}$(collapse_pwd)%{$reset_color%}'
 
 local return_code='%(?..%{$fg[red]%}%? ↵%{$reset_color%})'
 local git_information='$(git_prompt_status) %{$reset_color%}$(git_prompt_info)%{$reset_color%}%{$fg[cyan]%}$(git_remote_information)%{$reset_color%}'
+local aws_vault='%{$fg[red]%}$(aws_vault_information)%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
@@ -61,4 +68,4 @@ ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}D" # this is the opposite of untracked
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}??"
 
 PROMPT="${pwd}» "
-RPROMPT="${return_code} ${git_information}"
+RPROMPT="${return_code} ${aws_vault} ${git_information}"
